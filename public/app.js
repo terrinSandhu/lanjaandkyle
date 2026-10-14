@@ -64,15 +64,24 @@ const storyCouple = document.querySelector('.story-couple');
 const storyDate = document.querySelector('.story-date');
 const storyAddress = document.querySelector('.story-address');
 const storyGallery = document.querySelector('.story-gallery');
+const storyFocal = document.querySelector('.story-focal');
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const fade = (progress, start, end) => clamp((progress - start) / (end - start));
-function renderStory() {
+let targetStoryProgress = 0;
+let storyProgress = 0;
+let storyFrame = 0;
+function measureStory() {
   if (!storyTrack) return;
   const bounds = storyTrack.getBoundingClientRect();
-  const progress = clamp((window.innerHeight - bounds.top) / (bounds.height - window.innerHeight));
+  targetStoryProgress = clamp((window.innerHeight - bounds.top) / (bounds.height - window.innerHeight));
+  if (!storyFrame) storyFrame = requestAnimationFrame(animateStory);
+}
+function animateStory() {
+  storyProgress += (targetStoryProgress - storyProgress) * .14;
+  const progress = storyProgress;
   const venueOut = fade(progress, .48, .68);
   const galleryIn = fade(progress, .62, .86);
-  storyBackdrop.style.transform = `translate(-50%, -50%) scale(${1.08 - progress * .08})`;
+  storyBackdrop.style.transform = `translate(-50%, -50%) scale(${1.08 - progress * .08}) rotate(${(progress - .5) * 1.8}deg)`;
   storyBackdrop.style.opacity = String(1 - venueOut);
   storyColor.style.opacity = String(fade(progress, .5, .72));
   storyWash.style.opacity = String(1 - fade(progress, .58, .78));
@@ -82,10 +91,48 @@ function renderStory() {
   storyAddress.style.opacity = String(fade(progress, .3, .48) * (1 - fade(progress, .5, .66)));
   storyGallery.style.opacity = String(galleryIn);
   storyGallery.style.transform = `translate(-50%, calc(-50% + ${(1 - galleryIn) * 22}vh)) scale(${.9 + galleryIn * .1})`;
+  storyFocal.style.transform = `translate(-50%, -50%) scale(${.72 + progress * .35}) rotate(${progress * 16}deg)`;
+  storyFocal.style.opacity = String(fade(progress, .1, .32) * (1 - fade(progress, .62, .82)));
+  if (Math.abs(targetStoryProgress - storyProgress) > .001) storyFrame = requestAnimationFrame(animateStory);
+  else storyFrame = 0;
 }
-window.addEventListener('scroll', renderStory, { passive: true });
-window.addEventListener('resize', renderStory);
-renderStory();
+window.addEventListener('scroll', measureStory, { passive: true });
+window.addEventListener('resize', measureStory);
+measureStory();
+
+const welcomeOverlay = document.querySelector('#welcome-overlay');
+const openInvitation = document.querySelector('#open-invitation');
+const closeWelcome = () => {
+  welcomeOverlay?.classList.add('is-closing');
+  window.setTimeout(() => welcomeOverlay?.remove(), 650);
+  sessionStorage.setItem('lanjaandkyle-welcome-seen', 'true');
+};
+if (sessionStorage.getItem('lanjaandkyle-welcome-seen') === 'true') welcomeOverlay?.remove();
+openInvitation?.addEventListener('click', closeWelcome);
+welcomeOverlay?.addEventListener('click', (event) => { if (event.target === welcomeOverlay) closeWelcome(); });
+window.addEventListener('keydown', (event) => { if (event.key === 'Escape' && welcomeOverlay) closeWelcome(); });
+
+const detailModal = document.querySelector('#detail-modal');
+const modalTitle = document.querySelector('#modal-title');
+const modalCopy = document.querySelector('#modal-copy');
+const modalKicker = document.querySelector('#modal-kicker');
+const modalLink = document.querySelector('#modal-link');
+const showModal = ({ title, copy, kicker = 'A little detail', link = '#rsvp' }) => {
+  if (!detailModal) return;
+  modalTitle.textContent = title;
+  modalCopy.textContent = copy;
+  modalKicker.textContent = kicker;
+  modalLink.href = link;
+  detailModal.showModal();
+};
+document.querySelector('#modal-close')?.addEventListener('click', () => detailModal.close());
+detailModal?.addEventListener('click', (event) => { if (event.target === detailModal) detailModal.close(); });
+document.querySelectorAll('.gallery-card').forEach((card) => card.addEventListener('click', () => showModal({ title: card.dataset.modalTitle, copy: card.dataset.modalCopy, kicker: 'From the gallery' })));
+document.querySelector('#schedule-list')?.addEventListener('click', (event) => {
+  const card = event.target.closest('.schedule-card');
+  if (!card) return;
+  showModal({ title: card.querySelector('h3')?.textContent || 'Weekend plan', copy: card.querySelector('p')?.textContent || 'More details coming soon.', kicker: card.querySelector('.time')?.textContent || 'Schedule' });
+});
 
 const rsvpForm = document.querySelector('#rsvp-form');
 const rsvpStatus = document.querySelector('#rsvp-status');
