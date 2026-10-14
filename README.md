@@ -12,7 +12,7 @@ Edit [`public/data/schedule.csv`](public/data/schedule.csv) in GitHub. The brows
 
 ## Cloudflare
 
-`cloudflare.jsonc` is the deployment config for the Worker named `lanjaandkyle`. Replace the `account_id` placeholder only if your Cloudflare CLI setup requires it. Deploy from this directory with the Cloudflare CLI after signing in.
+`wrangler.jsonc` is the deployment config for the Worker named `lanjaandkyle`. Deploy from this directory with Wrangler after signing in. The currently created `workers.dev` Worker is a bootstrap deployment that fetches the GitHub `main` branch, so repo edits are visible without a manual upload. For production, connect this repository to Cloudflare Workers Builds and let the `wrangler.jsonc` Static Assets configuration perform the native asset deployment.
 
 ## Custom domain / DNS
 
