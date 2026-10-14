@@ -24,6 +24,16 @@
         <a href="#faqs">FAQs</a>
       </nav>
     </header>
+    <div id="welcome-overlay" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="welcome-veil"></div>
+      <div class="welcome-card">
+        <div class="ornate-frame" aria-hidden="true"><span class="ornate-corner top-left"></span><span class="ornate-corner top-right"></span><span class="ornate-corner bottom-left"></span><span class="ornate-corner bottom-right"></span></div>
+        <p class="eyebrow">A private invitation</p>
+        <h2 id="welcome-title">Lanja <em>&</em> Kyle</h2>
+        <p class="welcome-date">Santa Barbara · June 5, 2027</p>
+        <button id="open-invitation" class="button" type="button">Enter the celebration <span>↗</span></button>
+      </div>
+    </div>
     <aside class="section-rail" aria-label="Page sections">
       <a href="#home" class="section-rail-link active"><span>Home</span></a>
       <a href="#story" class="section-rail-link"><span>Story</span></a>
@@ -40,6 +50,7 @@
       <section id="home" class="hero section-anchor">
         <div class="hero-image"></div>
         <div class="hero-overlay"></div>
+        <div class="ornate-frame hero-ornament" aria-hidden="true"><span class="ornate-corner top-left"></span><span class="ornate-corner top-right"></span><span class="ornate-corner bottom-left"></span><span class="ornate-corner bottom-right"></span></div>
         <div class="hero-copy">
           <p class="eyebrow">We’re getting married</p>
           <h1>Lanja <em>&</em> Kyle</h1>
@@ -69,6 +80,8 @@
             <div class="story-backdrop"></div>
             <div class="story-color"></div>
             <div class="story-wash"></div>
+            <div class="story-focal" aria-hidden="true"></div>
+            <div class="ornate-frame story-ornament" aria-hidden="true"><span class="ornate-corner top-left"></span><span class="ornate-corner top-right"></span><span class="ornate-corner bottom-left"></span><span class="ornate-corner bottom-right"></span></div>
             <div class="story-copy">
               <p class="eyebrow story-kicker">A place to begin</p>
               <h2 class="story-couple">Lanja <em>&</em> Kyle</h2>
@@ -86,7 +99,7 @@
 
       <section id="registry" class="content-section centered tinted section-anchor"><p class="eyebrow">Your presence is enough</p><h2>A few things for our <em>next chapter</em></h2><p class="lede narrow">We’re most excited to have you with us. If you’d like to contribute, these are a few places we’re gathering wishes.</p><div class="registry-grid"><a class="registry-card" data-registry-item="Crate & Barrel" href="https://www.crateandbarrel.com/" target="_blank" rel="noreferrer"><span class="line-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5h16M5.5 8.5v10h13v-10M8 8.5V5.8h8v2.7M9 12v3M12 12v3M15 12v3"/></svg></span><span class="registry-label">Home & table</span><h3>Crate & Barrel</h3><span class="text-link">View registry <span>↗</span></span></a><a class="registry-card" data-registry-item="Honeymoon fund" href="mailto:hello@lanjaandkyle.com?subject=Honeymoon%20fund"><span class="line-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 15.5c2.1-2.1 4.1-2.1 6.2 0 2.1-2.1 4.1-2.1 6.2 0s4.1 2 4.6 2.5M3.5 10.5c2.1-2.1 4.1-2.1 6.2 0 2.1-2.1 4.1-2.1 6.2 0s4.1 2 4.6 2.5M5 19h14"/></svg></span><span class="registry-label">A little adventure</span><h3>Honeymoon fund</h3><span class="text-link">Send a note <span>↗</span></span></a></div></section>
 
-      <section id="gallery" class="content-section section-anchor"><div class="section-heading"><p class="eyebrow">Scenes we love</p><h2>A little <em>sunshine</em></h2></div><div class="gallery-grid"><div class="gallery-card large" style="--bg:url('/assets/engagement-coast.png')"></div><div class="gallery-card detail" style="--bg:url('/assets/engagement-garden.png')"></div><div class="gallery-card detail warm" style="--bg:url('/assets/venue-watercolor.png')"></div></div></section>
+      <section id="gallery" class="content-section section-anchor"><div class="section-heading"><p class="eyebrow">Scenes we love</p><h2>A little <em>sunshine</em></h2></div><div class="gallery-grid"><button class="gallery-card large" data-modal-title="The coast, before sunset" data-modal-copy="A little salt air, a long walk, and the beginning of everything." style="--bg:url('/assets/engagement-coast.png')" type="button"></button><button class="gallery-card detail" data-modal-title="Somewhere along the way" data-modal-copy="The in-between moments are some of our favorites." style="--bg:url('/assets/engagement-garden.png')" type="button"></button><button class="gallery-card detail warm" data-modal-title="A place to begin" data-modal-copy="Our watercolor venue study, while the real day is still ahead." style="--bg:url('/assets/venue-watercolor.png')" type="button"></button></div></section>
 
       <section id="things-to-do" class="content-section split reverse section-anchor"><div class="split-art art-table"></div><div class="split-copy"><p class="eyebrow">Before & after</p><h2>Things to <em>do</em></h2><p>Take the long way along the coast, find a shady table for lunch, and leave room for one more glass of wine at sunset.</p><div class="mini-list"><span>01&nbsp;&nbsp; State Street stroll</span><span>02&nbsp;&nbsp; Butterfly Beach</span><span>03&nbsp;&nbsp; Funk Zone dinner</span></div></div></section>
 
@@ -94,6 +107,16 @@
 
       <section id="rsvp" class="rsvp section-anchor"><div><p class="eyebrow">We hope you’ll be there</p><h2>See you in <em>Santa Barbara</em></h2><p class="rsvp-note">Tell us a little about your plans. We’ll save your response for the couple.</p></div><form id="rsvp-form" class="rsvp-form"><label>Names<input name="name" autocomplete="name" required /></label><label>Email<input name="email" type="email" autocomplete="email" required /></label><label>Will you join us?<select name="attendance" required><option value="">Select one</option><option value="joyfully-attending">Joyfully attending</option><option value="will-miss-you">Will miss you</option></select></label><label>Number of guests<input name="guests" type="number" min="1" max="6" value="1" required /></label><label class="full">A note for Lanja & Kyle<textarea name="note" rows="3"></textarea></label><button class="button light" type="submit">Send RSVP</button><p id="rsvp-status" class="form-status" aria-live="polite"></p></form></section>
     </main>
+    <dialog id="detail-modal" class="detail-modal" aria-labelledby="modal-title">
+      <div class="modal-card">
+        <div class="ornate-frame" aria-hidden="true"><span class="ornate-corner top-left"></span><span class="ornate-corner top-right"></span><span class="ornate-corner bottom-left"></span><span class="ornate-corner bottom-right"></span></div>
+        <button id="modal-close" class="modal-close" type="button" aria-label="Close details">Close</button>
+        <p id="modal-kicker" class="eyebrow">A little detail</p>
+        <h2 id="modal-title">The weekend plan</h2>
+        <p id="modal-copy" class="modal-copy"></p>
+        <a id="modal-link" class="button" href="#rsvp">Keep exploring <span>↗</span></a>
+      </div>
+    </dialog>
     <footer><div class="brand footer-brand"><span>L</span><span class="amp">&</span><span>K</span></div><p>For all the days along the way.</p><p class="footer-small">Made with love for Lanja & Kyle · 2027</p></footer>
     <script type="module" src="/app.js"></script>
   </body>
