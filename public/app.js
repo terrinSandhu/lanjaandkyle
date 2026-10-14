@@ -32,7 +32,7 @@ async function loadSchedule() {
     const rows = csv.trim().split(/\r?\n/).slice(1).map((line) => line.split(',').map((cell) => cell.trim()));
     list.innerHTML = rows.map(([date, time, title, location, description]) => {
       const icon = /ceremony/i.test(title) ? icons.ceremony : /welcome/i.test(title) ? icons.welcome : /reception/i.test(title) ? icons.reception : icons.default;
-      return `<article class="schedule-card reveal"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3><p>${description}</p><p class="time">${location}</p></article>`;
+      return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3><p>${description}</p><p class="time">${location}</p></article>`;
     }).join('');
     observeReveals(list);
   } catch { list.innerHTML = '<p class="loading">Schedule details are coming soon.</p>'; }
@@ -128,11 +128,15 @@ const showModal = ({ title, copy, kicker = 'A little detail', link = '#rsvp' }) 
 document.querySelector('#modal-close')?.addEventListener('click', () => detailModal.close());
 detailModal?.addEventListener('click', (event) => { if (event.target === detailModal) detailModal.close(); });
 document.querySelectorAll('.gallery-card').forEach((card) => card.addEventListener('click', () => showModal({ title: card.dataset.modalTitle, copy: card.dataset.modalCopy, kicker: 'From the gallery' })));
-document.querySelector('#schedule-list')?.addEventListener('click', (event) => {
+const openScheduleModal = (event) => {
+  if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
+  if (event.type === 'keydown') event.preventDefault();
   const card = event.target.closest('.schedule-card');
   if (!card) return;
   showModal({ title: card.querySelector('h3')?.textContent || 'Weekend plan', copy: card.querySelector('p')?.textContent || 'More details coming soon.', kicker: card.querySelector('.time')?.textContent || 'Schedule' });
-});
+};
+document.querySelector('#schedule-list')?.addEventListener('click', openScheduleModal);
+document.querySelector('#schedule-list')?.addEventListener('keydown', openScheduleModal);
 
 const rsvpForm = document.querySelector('#rsvp-form');
 const rsvpStatus = document.querySelector('#rsvp-status');
