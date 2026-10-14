@@ -3,5 +3,6 @@
   "compatibility_date": "2026-10-13",
   "main": "src/worker.js",
   "assets": { "directory": "./public" },
+  "kv_namespaces": [{ "binding": "EVENTS", "id": "4578d2f311f94d1faca0a847a2e225b3" }],
   "observability": { "enabled": true, "traces": { "enabled": true } }
 }
