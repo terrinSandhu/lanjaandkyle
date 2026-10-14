@@ -70,6 +70,7 @@ const fade = (progress, start, end) => clamp((progress - start) / (end - start))
 let targetStoryProgress = 0;
 let storyProgress = 0;
 let storyFrame = 0;
+const storySpring = window.matchMedia('(max-width: 760px)').matches ? .22 : .14;
 function measureStory() {
   if (!storyTrack) return;
   const bounds = storyTrack.getBoundingClientRect();
@@ -77,7 +78,7 @@ function measureStory() {
   if (!storyFrame) storyFrame = requestAnimationFrame(animateStory);
 }
 function animateStory() {
-  storyProgress += (targetStoryProgress - storyProgress) * .14;
+  storyProgress += (targetStoryProgress - storyProgress) * storySpring;
   const progress = storyProgress;
   const venueOut = fade(progress, .48, .68);
   const galleryIn = fade(progress, .62, .86);
@@ -140,6 +141,12 @@ document.querySelector('#schedule-list')?.addEventListener('keydown', openSchedu
 
 const rsvpForm = document.querySelector('#rsvp-form');
 const rsvpStatus = document.querySelector('#rsvp-status');
+const mobileRsvpCta = document.querySelector('.mobile-rsvp-cta');
+const rsvpSection = document.querySelector('#rsvp');
+if (mobileRsvpCta && rsvpSection) {
+  const rsvpVisibility = new IntersectionObserver(([entry]) => mobileRsvpCta.classList.toggle('is-hidden', entry.isIntersecting), { threshold: .2 });
+  rsvpVisibility.observe(rsvpSection);
+}
 rsvpForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
   const button = rsvpForm.querySelector('button');
