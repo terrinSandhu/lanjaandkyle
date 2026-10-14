@@ -10,3 +10,41 @@
 @media(max-width:760px){.welcome-card{min-height:430px;padding-inline:24px}.welcome-card h2{font-size:clamp(48px,15vw,74px)}.ornate-frame{inset:18px}.ornate-corner{width:65px;height:65px}.ornate-corner:before{width:48px;height:48px}.ornate-corner:after{top:11px;left:11px;width:34px;height:34px}.hero-ornament{inset:16px}.story-ornament{inset:18px}.story-focal{width:72vw;height:72vw}.modal-card{padding:66px 30px 42px}.modal-card h2{font-size:44px}.modal-card .ornate-frame{inset:18px}}
 .schedule-card:focus-visible,.gallery-card:focus-visible,.modal-close:focus-visible,.button:focus-visible,.section-rail-link:focus-visible{outline:1px solid currentColor;outline-offset:6px}
 
+/* Mobile invitation polish */
+.mobile-rsvp-cta{display:none}
+@media(max-width:760px){
+  .welcome-overlay{backdrop-filter:none;background:rgba(24,40,35,.72)}
+  .welcome-veil{background:rgba(24,40,35,.34)}
+  .welcome-card{background:rgba(247,243,237,.98);box-shadow:0 24px 70px rgba(16,28,25,.4)}
+  .story-track{height:235vh}
+  .story-stage:before,.story-stage:after{opacity:.5}
+  .story-gallery{width:100vw;height:52vh;padding:0}
+  .story-photo{width:31vw;min-width:104px;height:43vw;min-height:156px;border-width:5px;box-shadow:0 14px 28px rgba(62,46,36,.18)}
+  .story-photo.photo-one{transform:translate(-112%,-50%) rotate(-7deg)}
+  .story-photo.photo-three{transform:translate(12%,-50%) rotate(7deg)}
+  .story-photo figcaption{bottom:-24px;font-size:7px}
+  .story-gallery:after{bottom:5%;font-size:21px}
+  .section-rail{z-index:18}
+  .section-rail-link{padding:5px 3px}
+  .section-rail-link[href="#rsvp"]{color:var(--rust);font-weight:600}
+  .mobile-rsvp-cta{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:19;display:flex;align-items:center;gap:12px;padding:12px 17px;border:1px solid rgba(247,243,237,.72);border-radius:999px;background:var(--ink);box-shadow:0 12px 28px rgba(24,40,35,.24);color:#fff;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;transition:opacity .3s ease,transform .3s ease}
+  .mobile-rsvp-cta span{font-size:15px;line-height:1}
+  .mobile-rsvp-cta.is-hidden{opacity:0;pointer-events:none;transform:translateY(12px)}
+  .rsvp{position:relative;min-height:100svh;align-content:center;gap:34px;padding:92px 22px 64px;background:radial-gradient(circle at 88% 8%,rgba(168,128,104,.28),transparent 34%),var(--ink)}
+  .rsvp:before{content:'Please reply';position:absolute;top:30px;left:22px;color:rgba(250,247,242,.62);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+  .rsvp h2{max-width:340px;margin:16px 0 18px;font-size:clamp(52px,15vw,76px);line-height:.94}
+  .rsvp-note{font-size:15px;line-height:1.55}
+  .rsvp-form{gap:22px}
+  .rsvp-form label{gap:9px;font-size:9px}
+  .rsvp-form input,.rsvp-form select,.rsvp-form textarea{padding:12px 0;font-size:16px}
+  .rsvp-form .button{width:100%;min-height:60px;margin-top:4px;justify-self:stretch;border-color:transparent;background:#f7f3ed;color:var(--ink);font-size:12px;font-weight:600;letter-spacing:.2em;box-shadow:0 10px 24px rgba(13,26,22,.2)}
+  .form-status{font-size:12px}
+  .detail-modal::backdrop{backdrop-filter:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .welcome-overlay,.welcome-card,.detail-modal::backdrop,.modal-card{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .mobile-rsvp-cta{transition:none}
+}
+
