@@ -1,0 +1,8 @@
+{
+  "name": "lanjaandkyle",
+  "compatibility_date": "2026-10-13",
+  "main": "src/worker.js",
+  "assets": { "directory": "./public" },
+  "observability": { "enabled": true, "traces": { "enabled": true } }
+}
+
