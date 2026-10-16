@@ -193,6 +193,9 @@ document.querySelector('[data-registry-item="Honeymoon fund"]')?.remove();
 const galleryViewport = document.querySelector('#engagement-viewport');
 const galleryTrack = document.querySelector('#engagement-track');
 const galleryPosition = document.querySelector('#gallery-position');
+const galleryToggle = document.querySelector('#gallery-toggle');
+const photoModal = document.querySelector('#photo-modal');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const engagementPhotos = Array.from({ length: 31 }, (_, index) => ({
   src: `/assets/engagement/gallery/${String(index + 1).padStart(2, '0')}.jpg`,
   alt: `Lanja and Kyle, engagement photograph ${index + 1}`
@@ -209,9 +212,36 @@ if (galleryTrack && galleryViewport) {
   };
   const goToPhoto = (index) => {
     currentPhoto = (index + engagementPhotos.length) % engagementPhotos.length;
-    galleryTrack.querySelectorAll('.story-photo')[currentPhoto]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    galleryTrack.querySelectorAll('.story-photo')[currentPhoto]?.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
     galleryPosition.textContent = `Photo ${currentPhoto + 1} of ${engagementPhotos.length}`;
   };
+  let galleryPlaying = !reducedMotion.matches;
+  let galleryVisible = false;
+  let pointerInsideGallery = false;
+  let autoAdvanceTimer;
+  const syncAutoAdvance = () => {
+    window.clearInterval(autoAdvanceTimer);
+    if (galleryPlaying && galleryVisible && !pointerInsideGallery && !document.hidden && !photoModal?.open) {
+      autoAdvanceTimer = window.setInterval(() => { if (!photoModal?.open) goToPhoto(currentPhoto + 1); }, 4300);
+    }
+    galleryToggle?.setAttribute('aria-pressed', String(galleryPlaying));
+    if (galleryToggle) galleryToggle.textContent = galleryPlaying ? 'Pause photos' : 'Play photos';
+  };
+  const galleryObserver = new IntersectionObserver(([entry]) => {
+    galleryVisible = entry.isIntersecting && entry.intersectionRatio >= .35;
+    syncAutoAdvance();
+  }, { threshold: [.35, .6] });
+  galleryObserver.observe(galleryViewport);
+  if (window.matchMedia('(hover: hover)').matches) {
+    galleryViewport.addEventListener('pointerenter', () => { pointerInsideGallery = true; syncAutoAdvance(); });
+    galleryViewport.addEventListener('pointerleave', () => { pointerInsideGallery = false; syncAutoAdvance(); });
+  }
+  document.addEventListener('visibilitychange', syncAutoAdvance);
+  reducedMotion.addEventListener?.('change', (event) => {
+    if (event.matches) galleryPlaying = false;
+    syncAutoAdvance();
+  });
+  galleryToggle?.addEventListener('click', () => { galleryPlaying = !galleryPlaying; syncAutoAdvance(); });
   galleryViewport.addEventListener('scroll', updateGalleryPosition, { passive: true });
   galleryViewport.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') { event.preventDefault(); goToPhoto(currentPhoto + 1); }
@@ -219,11 +249,12 @@ if (galleryTrack && galleryViewport) {
   });
   document.querySelector('#gallery-previous')?.addEventListener('click', () => goToPhoto(currentPhoto - 1));
   document.querySelector('#gallery-next')?.addEventListener('click', () => goToPhoto(currentPhoto + 1));
+  photoModal?.addEventListener('close', syncAutoAdvance);
+  syncAutoAdvance();
   updateGalleryPosition();
   measureStory();
 }
 
-const photoModal = document.querySelector('#photo-modal');
 const photoModalImage = document.querySelector('#photo-modal-image');
 const photoModalCaption = document.querySelector('#photo-modal-caption');
 const showEngagementPhoto = (index) => {
@@ -233,6 +264,7 @@ const showEngagementPhoto = (index) => {
   photoModalImage.alt = photo.alt;
   photoModalCaption.textContent = `Lanja & Kyle · ${currentPhoto + 1} of ${engagementPhotos.length}`;
   if (!photoModal.open) photoModal.showModal();
+  galleryToggle?.setAttribute('aria-pressed', 'false');
   galleryPosition.textContent = `Photo ${currentPhoto + 1} of ${engagementPhotos.length}`;
 };
 galleryTrack?.addEventListener('click', (event) => {
