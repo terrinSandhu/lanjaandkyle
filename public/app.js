@@ -29,7 +29,21 @@ async function loadSchedule() {
   const list = document.querySelector('#schedule-list');
   try {
     const csv = await fetch('/data/schedule.csv').then((res) => { if (!res.ok) throw new Error('Schedule unavailable'); return res.text(); });
-    const rows = csv.trim().split(/\r?\n/).slice(1).map((line) => line.split(',').map((cell) => cell.trim()));
+    const parseCsvLine = (line) => {
+      const cells = [];
+      let cell = '';
+      let quoted = false;
+      for (let index = 0; index < line.length; index += 1) {
+        const character = line[index];
+        if (character === '"' && line[index + 1] === '"') { cell += '"'; index += 1; }
+        else if (character === '"') quoted = !quoted;
+        else if (character === ',' && !quoted) { cells.push(cell.trim()); cell = ''; }
+        else cell += character;
+      }
+      cells.push(cell.trim());
+      return cells;
+    };
+    const rows = csv.trim().split(/\r?\n/).slice(1).map(parseCsvLine);
     list.innerHTML = rows.map(([date, time, title, location, description]) => {
       const icon = /ceremony/i.test(title) ? icons.ceremony : /welcome/i.test(title) ? icons.welcome : /reception/i.test(title) ? icons.reception : icons.default;
       return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3><p>${description}</p><p class="time">${location}</p></article>`;
