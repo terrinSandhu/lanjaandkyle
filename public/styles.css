@@ -73,6 +73,10 @@
 .thing-bike .thing-photo{background-image:url('/assets/engagement/web/coast.jpg')}
 .thing-beach .thing-photo{background-image:url('/assets/engagement/web/beach.jpg')}
 .thing-mission .thing-photo{background-image:url('/assets/engagement/web/field.jpg')}
+.art-palm{background-image:linear-gradient(120deg,rgba(20,47,68,.14),rgba(76,103,86,.18)),url('/assets/santa-barbara/shoreline.jpg')}
+.art-table{background-image:linear-gradient(120deg,rgba(20,47,68,.08),rgba(76,103,86,.16)),url('/assets/santa-barbara/palms.jpg')}
+.thing-state .thing-photo{background-image:url('/assets/santa-barbara/palms.jpg')}
+.thing-bike .thing-photo,.thing-beach .thing-photo{background-image:url('/assets/santa-barbara/shoreline.jpg')}
 .brand .amp,.hero h1 em,h2 em,.story-gallery:after{font-style:normal}
 @media(max-width:900px){.things-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
