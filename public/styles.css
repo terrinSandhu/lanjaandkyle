@@ -172,3 +172,4 @@
  .photo-modal-prev{left:calc(50% - 54px)}.photo-modal-next{right:calc(50% - 54px)}
 }
 @media(prefers-reduced-motion:reduce){.story-photo,.story-photo img,.gallery-step,.photo-modal-step{transition:none;animation:none}.gallery-viewport{scroll-behavior:auto}}
+.story-gallery:after{content:none;display:none}
