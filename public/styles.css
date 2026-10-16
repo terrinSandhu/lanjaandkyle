@@ -173,3 +173,5 @@
 }
 @media(prefers-reduced-motion:reduce){.story-photo,.story-photo img,.gallery-step,.photo-modal-step{transition:none;animation:none}.gallery-viewport{scroll-behavior:auto}}
 .story-gallery:after{content:none;display:none}
+.thing-funk .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.04),rgba(159,115,93,.1)),url('/assets/santa-barbara/locations/funk-zone.jpg')}
+.thing-beach .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.03),rgba(159,115,93,.08)),url('/assets/santa-barbara/locations/butterfly-beach-sunset.jpg')}
