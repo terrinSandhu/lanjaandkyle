@@ -87,13 +87,17 @@
               <p class="story-date">June 5, 2027</p>
               <p class="story-address">Santa Barbara, California</p>
             </div>
-            <div class="story-gallery" aria-label="Engagement gallery">
-              <figure class="story-photo photo-one"><figcaption>the coast, before sunset</figcaption></figure>
-              <figure class="story-photo photo-two"><figcaption>somewhere along the way</figcaption></figure>
-              <figure class="story-photo photo-three"><figcaption>all our favorite days</figcaption></figure>
-              <figure class="story-photo photo-four"><figcaption>golden hour</figcaption></figure>
-              <figure class="story-photo photo-five"><figcaption>just us</figcaption></figure>
-              <figure class="story-photo photo-six"><figcaption>the long way home</figcaption></figure>
+            <div class="story-gallery" aria-labelledby="engagement-heading">
+              <h2 id="engagement-heading">Pieces of our engagement</h2>
+              <div class="engagement-controls">
+                <button class="gallery-step" id="gallery-previous" type="button" aria-label="Previous engagement photo">←</button>
+                <p id="gallery-position" aria-live="polite">Photo 1 of 31</p>
+                <button class="gallery-step" id="gallery-next" type="button" aria-label="Next engagement photo">→</button>
+              </div>
+              <div class="gallery-viewport" id="engagement-viewport" tabindex="0" aria-label="Scrollable engagement photos">
+                <div class="gallery-track" id="engagement-track"></div>
+              </div>
+              <p class="gallery-hint">Scroll or swipe to see more</p>
             </div>
           </div>
         </div>
@@ -116,6 +120,12 @@
         <p id="modal-copy" class="modal-copy"></p>
         <a id="modal-link" class="button" href="#rsvp">Keep exploring <span>↗</span></a>
       </div>
+    </dialog>
+    <dialog id="photo-modal" class="photo-modal" aria-label="Engagement photo viewer">
+      <button class="photo-modal-close" id="photo-modal-close" type="button" aria-label="Close photo">Close</button>
+      <button class="photo-modal-step photo-modal-prev" id="photo-modal-prev" type="button" aria-label="Previous photo">←</button>
+      <figure><img id="photo-modal-image" alt="" /><figcaption id="photo-modal-caption"></figcaption></figure>
+      <button class="photo-modal-step photo-modal-next" id="photo-modal-next" type="button" aria-label="Next photo">→</button>
     </dialog>
     <footer><div class="brand footer-brand"><span>L</span><span class="amp">&</span><span>K</span></div><p>For all the days along the way.</p><p class="footer-small">Made with love for Lanja & Kyle · 2027</p></footer>
     <script type="module" src="/app.js"></script>

@@ -79,7 +79,7 @@ const storyCouple = document.querySelector('.story-couple');
 const storyDate = document.querySelector('.story-date');
 const storyAddress = document.querySelector('.story-address');
 const storyGallery = document.querySelector('.story-gallery');
-const storyPhotos = [...document.querySelectorAll('.story-photo')];
+let storyPhotos = [];
 const storyFocal = document.querySelector('.story-focal');
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const fade = (progress, start, end) => clamp((progress - start) / (end - start));
@@ -109,7 +109,7 @@ function animateStory() {
   storyGallery.style.opacity = String(galleryIn);
   storyGallery.style.transform = `translate(-50%, calc(-50% + ${(1 - galleryIn) * 22}vh)) scale(${.9 + galleryIn * .1})`;
   storyPhotos.forEach((photo, index) => {
-    const reveal = fade(progress, .6 + index * .035, .76 + index * .035);
+    const reveal = fade(progress, .6 + Math.min(index, 4) * .035, .76 + Math.min(index, 4) * .035);
     photo.style.setProperty('--story-reveal', String(reveal));
     photo.style.opacity = String(reveal);
   });
@@ -189,3 +189,61 @@ document.querySelectorAll('[data-registry-item]').forEach((item) => item.addEven
 }));
 
 document.querySelector('[data-registry-item="Honeymoon fund"]')?.remove();
+
+const galleryViewport = document.querySelector('#engagement-viewport');
+const galleryTrack = document.querySelector('#engagement-track');
+const galleryPosition = document.querySelector('#gallery-position');
+const engagementPhotos = Array.from({ length: 31 }, (_, index) => ({
+  src: `/assets/engagement/gallery/${String(index + 1).padStart(2, '0')}.jpg`,
+  alt: `Lanja and Kyle, engagement photograph ${index + 1}`
+}));
+let currentPhoto = 0;
+if (galleryTrack && galleryViewport) {
+  galleryTrack.innerHTML = engagementPhotos.map((photo, index) => `<figure class="story-photo"><button class="story-photo-open" type="button" data-photo-index="${index}" aria-label="View engagement photo ${index + 1} of ${engagementPhotos.length}"><img src="${photo.src}" alt="${photo.alt}" loading="lazy" /></button><figcaption>${String(index + 1).padStart(2, '0')} / ${String(engagementPhotos.length).padStart(2, '0')}</figcaption></figure>`).join('');
+  storyPhotos = [...galleryTrack.querySelectorAll('.story-photo')];
+  const updateGalleryPosition = () => {
+    const cards = [...galleryTrack.querySelectorAll('.story-photo')];
+    const midpoint = galleryViewport.scrollLeft + galleryViewport.clientWidth / 2;
+    currentPhoto = cards.reduce((nearest, card, index) => Math.abs(card.offsetLeft + card.offsetWidth / 2 - midpoint) < Math.abs(cards[nearest].offsetLeft + cards[nearest].offsetWidth / 2 - midpoint) ? index : nearest, 0);
+    galleryPosition.textContent = `Photo ${currentPhoto + 1} of ${engagementPhotos.length}`;
+  };
+  const goToPhoto = (index) => {
+    currentPhoto = (index + engagementPhotos.length) % engagementPhotos.length;
+    galleryTrack.querySelectorAll('.story-photo')[currentPhoto]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    galleryPosition.textContent = `Photo ${currentPhoto + 1} of ${engagementPhotos.length}`;
+  };
+  galleryViewport.addEventListener('scroll', updateGalleryPosition, { passive: true });
+  galleryViewport.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight') { event.preventDefault(); goToPhoto(currentPhoto + 1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); goToPhoto(currentPhoto - 1); }
+  });
+  document.querySelector('#gallery-previous')?.addEventListener('click', () => goToPhoto(currentPhoto - 1));
+  document.querySelector('#gallery-next')?.addEventListener('click', () => goToPhoto(currentPhoto + 1));
+  updateGalleryPosition();
+  measureStory();
+}
+
+const photoModal = document.querySelector('#photo-modal');
+const photoModalImage = document.querySelector('#photo-modal-image');
+const photoModalCaption = document.querySelector('#photo-modal-caption');
+const showEngagementPhoto = (index) => {
+  currentPhoto = (index + engagementPhotos.length) % engagementPhotos.length;
+  const photo = engagementPhotos[currentPhoto];
+  photoModalImage.src = photo.src;
+  photoModalImage.alt = photo.alt;
+  photoModalCaption.textContent = `Lanja & Kyle · ${currentPhoto + 1} of ${engagementPhotos.length}`;
+  if (!photoModal.open) photoModal.showModal();
+  galleryPosition.textContent = `Photo ${currentPhoto + 1} of ${engagementPhotos.length}`;
+};
+galleryTrack?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-photo-index]');
+  if (button) showEngagementPhoto(Number(button.dataset.photoIndex));
+});
+document.querySelector('#photo-modal-close')?.addEventListener('click', () => photoModal.close());
+document.querySelector('#photo-modal-prev')?.addEventListener('click', () => showEngagementPhoto(currentPhoto - 1));
+document.querySelector('#photo-modal-next')?.addEventListener('click', () => showEngagementPhoto(currentPhoto + 1));
+photoModal?.addEventListener('click', (event) => { if (event.target === photoModal) photoModal.close(); });
+photoModal?.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') showEngagementPhoto(currentPhoto + 1);
+  if (event.key === 'ArrowLeft') showEngagementPhoto(currentPhoto - 1);
+});
