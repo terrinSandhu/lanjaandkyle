@@ -41,6 +41,36 @@
   .form-status{font-size:12px}
   .detail-modal::backdrop{backdrop-filter:none}
 }
+
+/* Couple-centered engagement sequence and location photography */
+.story-gallery:after{content:'Pieces of our engagement';font-style:normal}
+.story-photo{opacity:0;--story-reveal:0;transform:translate(-50%,-50%) translate(var(--photo-x),calc(var(--photo-y) + (1 - var(--story-reveal)) * 28px)) rotate(var(--photo-rotate)) scale(calc(.88 + var(--story-reveal) * .12));transition:box-shadow .5s ease}
+.story-photo.photo-one{--photo-x:-154%;--photo-y:8%;--photo-rotate:-10deg;background-image:url('/assets/engagement/web/hero.jpg')}
+.story-photo.photo-two{--photo-x:-52%;--photo-y:-12%;--photo-rotate:2deg;background-image:url('/assets/engagement/web/cuddle.jpg')}
+.story-photo.photo-three{--photo-x:52%;--photo-y:10%;--photo-rotate:9deg;background-image:url('/assets/engagement/web/dance.jpg')}
+.story-photo.photo-four{--photo-x:-112%;--photo-y:116%;--photo-rotate:-5deg;background-image:url('/assets/engagement/web/portrait.jpg')}
+.story-photo.photo-five{--photo-x:10%;--photo-y:122%;--photo-rotate:4deg;background-image:url('/assets/engagement/web/sunset.jpg')}
+.story-photo.photo-six{--photo-x:112%;--photo-y:112%;--photo-rotate:10deg;background-image:url('/assets/engagement/web/shore.jpg')}
+.photo-credit{margin-top:22px;color:rgba(76,64,56,.58);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.thing-zoo .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/locations/zoo.jpg')}
+.thing-funk .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/locations/funk-zone.jpg')}
+.thing-state .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/locations/state-street.jpg')}
+.thing-bike .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/shoreline.jpg')}
+.thing-beach .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/locations/butterfly-beach.jpg')}
+.thing-mission .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.08),rgba(159,115,93,.16)),url('/assets/santa-barbara/locations/mission.jpg')}
+.thing-photo{position:relative;border-bottom:1px solid rgba(56,49,43,.14)}
+.thing-photo:after{content:"";position:absolute;inset:12px;border:1px solid rgba(248,241,231,.72);pointer-events:none}
+.schedule-card .schedule-icon{display:block}
+.registry-grid:has(.registry-card:only-child){grid-template-columns:minmax(0,390px);justify-content:center}
+@media(max-width:760px){
+  .story-photo.photo-one{--photo-x:-128%;--photo-y:-4%;--photo-rotate:-8deg}
+  .story-photo.photo-two{--photo-x:-43%;--photo-y:-18%;--photo-rotate:2deg}
+  .story-photo.photo-three{--photo-x:43%;--photo-y:-4%;--photo-rotate:7deg}
+  .story-photo.photo-four{--photo-x:-93%;--photo-y:98%;--photo-rotate:-5deg}
+  .story-photo.photo-five{--photo-x:0%;--photo-y:105%;--photo-rotate:3deg}
+  .story-photo.photo-six{--photo-x:93%;--photo-y:96%;--photo-rotate:8deg}
+  .story-photo{width:28vw;min-width:94px;height:40vw;min-height:148px}
+}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .welcome-overlay,.welcome-card,.detail-modal::backdrop,.modal-card{animation:none}

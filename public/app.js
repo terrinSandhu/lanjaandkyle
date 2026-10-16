@@ -22,6 +22,7 @@ const icons = {
   ceremony: '<svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-5h6v5M3 9h18M12 4V2"/></svg>',
   welcome: '<svg viewBox="0 0 24 24"><path d="M4 20h16M5 20V9h14v11M8 9V5h8v4M8 13h.01M12 13h.01M16 13h.01M8 16h.01M12 16h.01M16 16h.01"/></svg>',
   reception: '<svg viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 10v11M16 3v18M16 3c2 1 3 3 3 5h-3"/></svg>',
+  brunch: '<svg viewBox="0 0 24 24"><path d="M4 15h16M6 15v4h12v-4M8 15V9a4 4 0 0 1 8 0v6M12 3v3M4 11H2M22 11h-2"/></svg>',
   default: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>'
 };
 
@@ -45,7 +46,7 @@ async function loadSchedule() {
     };
     const rows = csv.trim().split(/\r?\n/).slice(1).map(parseCsvLine);
     list.innerHTML = rows.map(([date, time, title, location, description]) => {
-      const icon = /ceremony/i.test(title) ? icons.ceremony : /welcome/i.test(title) ? icons.welcome : /reception/i.test(title) ? icons.reception : icons.default;
+      const icon = /ceremony/i.test(title) ? icons.ceremony : /welcome/i.test(title) ? icons.welcome : /brunch/i.test(title) ? icons.brunch : /reception/i.test(title) ? icons.reception : icons.default;
       return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3><p>${description}</p><p class="time">${location}</p></article>`;
     }).join('');
     observeReveals(list);
@@ -78,6 +79,7 @@ const storyCouple = document.querySelector('.story-couple');
 const storyDate = document.querySelector('.story-date');
 const storyAddress = document.querySelector('.story-address');
 const storyGallery = document.querySelector('.story-gallery');
+const storyPhotos = [...document.querySelectorAll('.story-photo')];
 const storyFocal = document.querySelector('.story-focal');
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const fade = (progress, start, end) => clamp((progress - start) / (end - start));
@@ -106,6 +108,11 @@ function animateStory() {
   storyAddress.style.opacity = String(fade(progress, .3, .48) * (1 - fade(progress, .5, .66)));
   storyGallery.style.opacity = String(galleryIn);
   storyGallery.style.transform = `translate(-50%, calc(-50% + ${(1 - galleryIn) * 22}vh)) scale(${.9 + galleryIn * .1})`;
+  storyPhotos.forEach((photo, index) => {
+    const reveal = fade(progress, .6 + index * .035, .76 + index * .035);
+    photo.style.setProperty('--story-reveal', String(reveal));
+    photo.style.opacity = String(reveal);
+  });
   storyFocal.style.transform = `translate(-50%, -50%) scale(${.72 + progress * .35}) rotate(${progress * 16}deg)`;
   storyFocal.style.opacity = String(fade(progress, .1, .32) * (1 - fade(progress, .62, .82)));
   if (Math.abs(targetStoryProgress - storyProgress) > .001) storyFrame = requestAnimationFrame(animateStory);
@@ -180,3 +187,5 @@ document.querySelectorAll('[data-registry-item]').forEach((item) => item.addEven
   if (navigator.sendBeacon) navigator.sendBeacon('/api/registry-click', new Blob([payload], { type: 'application/json' }));
   else fetch('/api/registry-click', { method: 'POST', headers: { 'content-type': 'application/json' }, body: payload, keepalive: true });
 }));
+
+document.querySelector('[data-registry-item="Honeymoon fund"]')?.remove();
