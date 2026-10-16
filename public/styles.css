@@ -48,3 +48,39 @@
   .mobile-rsvp-cta{transition:none}
 }
 
+/* Updated wedding details and engagement imagery */
+.hero-announce{margin:0 0 12px;font:500 clamp(15px,2vw,24px)/1.2 var(--sans);letter-spacing:.08em;text-transform:none}
+.hero-image{background-image:url('/assets/engagement/web/hero.jpg')}
+.art-palm{background-image:linear-gradient(120deg,rgba(211,192,163,.18),rgba(76,103,86,.26)),url('/assets/engagement/web/mountains.jpg')}
+.art-table{background-image:linear-gradient(120deg,rgba(211,192,163,.12),rgba(76,103,86,.2)),url('/assets/engagement/web/coast.jpg')}
+.story-photo.photo-one{background-image:url('/assets/engagement/web/coast.jpg')}
+.story-photo.photo-two{background-image:url('/assets/engagement/web/field.jpg')}
+.story-photo.photo-three{background-image:url('/assets/engagement/web/portrait.jpg')}
+.accommodations-copy{margin-top:42px;padding-top:28px;border-top:1px solid rgba(56,49,43,.2)}
+.accommodations-copy .eyebrow{margin-bottom:12px}
+.things-section{display:block}
+.things-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:48px}
+.thing-card{display:grid;grid-template-rows:220px 1fr;min-height:470px;background:#f7f3ed;border:1px solid rgba(56,49,43,.14);overflow:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease}
+.thing-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 18px 36px rgba(55,42,33,.12)}
+.thing-photo{background-position:center;background-size:cover}
+.thing-card>div:last-child{padding:24px 24px 28px}
+.thing-card .eyebrow{color:var(--rust);margin:0 0 10px}
+.thing-card h3{margin:0 0 10px;font:normal 1.8rem/1.05 var(--serif)}
+.thing-card p:last-child{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.thing-zoo .thing-photo{background-image:url('/assets/engagement/web/mountains.jpg')}
+.thing-funk .thing-photo{background-image:url('/assets/engagement/web/dance.jpg')}
+.thing-state .thing-photo{background-image:url('/assets/engagement/web/city.jpg')}
+.thing-bike .thing-photo{background-image:url('/assets/engagement/web/coast.jpg')}
+.thing-beach .thing-photo{background-image:url('/assets/engagement/web/beach.jpg')}
+.thing-mission .thing-photo{background-image:url('/assets/engagement/web/field.jpg')}
+.brand .amp,.hero h1 em,h2 em,.story-gallery:after{font-style:normal}
+@media(max-width:900px){.things-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  .hero-announce{font-size:18px}
+  .things-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
+  .thing-card{grid-template-rows:190px auto;min-height:0}
+  .thing-card>div:last-child{padding:20px 20px 24px}
+  .thing-card h3{font-size:1.65rem}
+  .accommodations-copy{margin-top:32px;padding-top:22px}
+}
+
