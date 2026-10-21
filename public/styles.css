@@ -156,6 +156,11 @@
 .thing-mission .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.03),rgba(159,115,93,.1)),url('/assets/santa-barbara/locations/mission-new.jpg');background-position:center 56%}
 .thing-mission .thing-photo:before{content:"";position:absolute;z-index:1;right:23px;bottom:22px;width:31%;height:48%;background:url('/assets/santa-barbara/locations/mission-exterior.jpg') center 42%/cover;border:5px solid #f8f1e7;box-shadow:0 8px 22px rgba(37,39,33,.24);transform:rotate(2deg)}
 .thing-mission .thing-photo:after{z-index:2}
+.hero-image{background-image:linear-gradient(90deg,rgba(24,46,42,.2),rgba(24,46,42,.04)),url('/assets/lanja-request/cover.jpg')}
+.art-palm{background-image:linear-gradient(120deg,rgba(211,192,163,.12),rgba(76,103,86,.2)),url('/assets/lanja-request/travel.jpg')}
+.thing-funk .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.04),rgba(159,115,93,.1)),url('/assets/lanja-request/funk.png')}
+.thing-mission .thing-photo{background-image:linear-gradient(145deg,rgba(40,59,48,.04),rgba(159,115,93,.1)),url('/assets/lanja-request/mission.png')}
+.hero-announce{font:600 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
 .photo-modal-prev{left:24px}.photo-modal-next{right:24px}
 @media(max-width:760px){
  .story-gallery{width:calc(100vw - 42px);height:62vh;max-height:600px;padding:22px 0;gap:8px}
@@ -204,3 +209,4 @@
 .admin-logout{margin-top:24px}
 .admin-panel .form-status{color:var(--muted)}
 @media(max-width:600px){.admin-mode{align-items:flex-start;flex-direction:column}.admin-image-preview{height:180px}.admin-panel>.modal-close{top:14px;right:14px}.admin-panel h2{padding-right:44px}}
+.story-backdrop{background:linear-gradient(90deg,rgba(27,44,39,.28),rgba(27,44,39,.04) 72%),url('/assets/lanja-request/watercolor-source.jpg') center/cover!important;filter:saturate(.72) contrast(.94)}

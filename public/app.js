@@ -47,7 +47,7 @@ async function loadSchedule() {
     const rows = csv.trim().split(/\r?\n/).slice(1).map(parseCsvLine);
     list.innerHTML = rows.map(([date, time, title, location, description]) => {
       const icon = /ceremony/i.test(title) ? icons.ceremony : /welcome/i.test(title) ? icons.welcome : /brunch/i.test(title) ? icons.brunch : /reception/i.test(title) ? icons.reception : icons.default;
-      return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3><p>${description}</p><p class="time">${location}</p></article>`;
+      return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3>${description ? `<p>${description}</p>` : ''}${location ? `<p class="time">${location}</p>` : ''}</article>`;
     }).join('');
     observeReveals(list);
   } catch { list.innerHTML = '<p class="loading">Schedule details are coming soon.</p>'; }
