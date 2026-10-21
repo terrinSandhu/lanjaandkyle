@@ -82,7 +82,9 @@ async function readContent(env) {
 
 function checkSameOrigin(request, url) {
   const origin = request.headers.get('Origin');
-  return !origin || new URL(origin).origin === url.origin;
+  if (!origin) return true;
+  try { return new URL(origin).origin === url.origin; }
+  catch { return false; }
 }
 
 export default {
