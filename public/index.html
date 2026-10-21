@@ -128,7 +128,23 @@
       <figure><img id="photo-modal-image" alt="" /><figcaption id="photo-modal-caption"></figcaption></figure>
       <button class="photo-modal-step photo-modal-next" id="photo-modal-next" type="button" aria-label="Next photo">→</button>
     </dialog>
-    <footer><div class="brand footer-brand"><span>L</span><span class="amp">&</span><span>K</span></div><p>For all the days along the way.</p><p class="footer-small">Made with love for Lanja & Kyle · 2027</p></footer>
+    <footer><div class="brand footer-brand"><span>L</span><span class="amp">&</span><span>K</span></div><p>For all the days along the way.</p><p class="footer-small">Made with love for Lanja & Kyle · 2027</p><button type="button" id="admin-open" class="admin-open">Site editor</button></footer>
+    <dialog id="admin-dialog" class="admin-dialog" aria-labelledby="admin-title">
+      <div class="admin-panel">
+        <button type="button" id="admin-close" class="modal-close">Close</button>
+        <p class="eyebrow">Private tools</p><h2 id="admin-title">Wedding site editor</h2>
+        <form id="admin-login" class="admin-login"><label>PIN<input name="pin" type="password" inputmode="numeric" autocomplete="current-password" required /></label><button class="button" type="submit">Unlock editor</button><p id="admin-login-status" class="form-status" aria-live="polite"></p></form>
+        <div id="admin-workspace" class="admin-workspace" hidden>
+          <div class="admin-mode"><div><h3>Lanja-edit mode</h3><p>When active, the inbox monitor checks for LANJA-EDIT prompts every 10 minutes.</p></div><label class="admin-switch"><input id="lanja-edit-toggle" type="checkbox" /><span>Activate</span></label></div>
+          <p id="admin-mode-status" class="form-status" aria-live="polite"></p>
+          <div class="admin-tabs" role="tablist"><button type="button" class="admin-tab active" data-admin-tab="copy">Text</button><button type="button" class="admin-tab" data-admin-tab="images">Images</button></div>
+          <section id="admin-copy" class="admin-section"><label>Text area<select id="admin-text-key"></select></label><label>Preview text<textarea id="admin-text-value" rows="5"></textarea></label><button type="button" id="admin-save-text" class="button">Save text</button><p id="admin-text-status" class="form-status" aria-live="polite"></p></section>
+          <section id="admin-images" class="admin-section" hidden><label>Image area<select id="admin-image-key"></select></label><div id="admin-image-preview" class="admin-image-preview" aria-label="Current image preview"></div><label>Choose an image<input id="admin-image-file" type="file" accept="image/jpeg,image/png,image/webp,image/avif" /></label><p class="admin-help">JPG, PNG, WebP, or AVIF · up to 5 MB</p><div class="admin-image-actions"><button type="button" id="admin-upload-image" class="button">Upload image</button><button type="button" id="admin-reset-image" class="button subtle">Restore original</button></div><p id="admin-image-status" class="form-status" aria-live="polite"></p></section>
+          <button type="button" id="admin-logout" class="admin-logout">Lock editor</button>
+        </div>
+      </div>
+    </dialog>
     <script type="module" src="/app.js"></script>
+    <script type="module" src="/admin.js"></script>
   </body>
 </html>
