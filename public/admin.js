@@ -115,7 +115,7 @@ async function unlock() {
   const status = await api('/api/lanja-edit-status');
   const toggle = document.querySelector('#lanja-edit-toggle');
   toggle.checked = status.active;
-  document.querySelector('#admin-mode-status').textContent = status.active ? 'Inbox monitoring is active.' : 'Inbox monitoring is off.';
+  document.querySelector('#admin-mode-status').textContent = status.active ? 'Inbox monitoring is active.' : status.scheduled ? `Monitoring is scheduled for ${new Date(status.startsAt).toLocaleString()} through ${new Date(status.endsAt).toLocaleString()}.` : 'Inbox monitoring is off.';
 }
 
 login.addEventListener('submit', async (event) => {

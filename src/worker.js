@@ -95,7 +95,12 @@ export default {
     if (url.pathname === '/api/site-content' && request.method === 'GET') return json(await readContent(env));
     if (url.pathname === '/api/lanja-edit-status' && request.method === 'GET') {
       const state = await env.EVENTS.get('lanja-edit-mode', 'json');
-      return json({ active: Boolean(state?.active), activatedAt: state?.activatedAt || null });
+      const now = Date.now();
+      const startsAt = state?.startsAt ? Date.parse(state.startsAt) : NaN;
+      const endsAt = state?.endsAt ? Date.parse(state.endsAt) : NaN;
+      const hasWindow = Number.isFinite(startsAt) && Number.isFinite(endsAt) && endsAt > startsAt;
+      const active = hasWindow ? now >= startsAt && now < endsAt : Boolean(state?.active);
+      return json({ active, scheduled: hasWindow && now < startsAt, startsAt: hasWindow ? state.startsAt : null, endsAt: hasWindow ? state.endsAt : null, activatedAt: state?.activatedAt || null });
     }
     if (url.pathname.startsWith('/api/site-image/') && request.method === 'GET') {
       const key = decodeURIComponent(url.pathname.slice('/api/site-image/'.length));
@@ -148,9 +153,19 @@ export default {
       if (url.pathname === '/api/admin/mode' && request.method === 'POST') {
         const body = await request.json().catch(() => null);
         if (typeof body?.active !== 'boolean') return json({ error: 'A mode state is required.' }, 400);
-        const state = { active: body.active, activatedAt: body.active ? new Date().toISOString() : null };
+        let state;
+        if (body.active && body.startsAt && body.endsAt) {
+          const startsAt = new Date(body.startsAt);
+          const endsAt = new Date(body.endsAt);
+          if (!Number.isFinite(startsAt.getTime()) || !Number.isFinite(endsAt.getTime()) || endsAt <= startsAt) return json({ error: 'The activation window is invalid.' }, 400);
+          state = { active: false, startsAt: startsAt.toISOString(), endsAt: endsAt.toISOString(), activatedAt: null };
+        } else {
+          state = { active: body.active, startsAt: null, endsAt: null, activatedAt: body.active ? new Date().toISOString() : null };
+        }
         await env.EVENTS.put('lanja-edit-mode', JSON.stringify(state));
-        return json({ ok: true, ...state });
+        const now = Date.now();
+        const active = state.startsAt ? now >= Date.parse(state.startsAt) && now < Date.parse(state.endsAt) : state.active;
+        return json({ ok: true, ...state, active, scheduled: Boolean(state.startsAt && now < Date.parse(state.startsAt)) });
       }
     }
     if (request.method === 'POST' && (url.pathname === '/api/rsvp' || url.pathname === '/api/registry-click')) {
