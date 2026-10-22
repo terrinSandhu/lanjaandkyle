@@ -15,6 +15,7 @@ const editableTextSelectors = {
   'mission-title': '.thing-mission h3', 'mission-copy': '.thing-mission > div:last-child > p:last-child', 'faq-heading': '#faqs .section-heading h2',
   'faq-1-question': '#faqs details:nth-of-type(1) summary', 'faq-1-answer': '#faqs details:nth-of-type(1) p', 'faq-2-question': '#faqs details:nth-of-type(2) summary', 'faq-2-answer': '#faqs details:nth-of-type(2) p',
   'faq-3-question': '#faqs details:nth-of-type(3) summary', 'faq-3-answer': '#faqs details:nth-of-type(3) p', 'faq-4-question': '#faqs details:nth-of-type(4) summary', 'faq-4-answer': '#faqs details:nth-of-type(4) p',
+  'faq-5-question': '#faqs details:nth-of-type(5) summary', 'faq-5-answer': '#faqs details:nth-of-type(5) p', 'faq-6-question': '#faqs details:nth-of-type(6) summary', 'faq-6-answer': '#faqs details:nth-of-type(6) p', 'faq-7-question': '#faqs details:nth-of-type(7) summary', 'faq-7-answer': '#faqs details:nth-of-type(7) p', 'faq-8-question': '#faqs details:nth-of-type(8) summary', 'faq-8-answer': '#faqs details:nth-of-type(8) p',
   'footer-copy': 'footer > p:not(.footer-small)'
 };
 const editableImageSelectors = {
@@ -25,6 +26,8 @@ function applySavedSiteContent(content) {
   for (const [key, value] of Object.entries(content.text || {})) {
     const element = document.querySelector(editableTextSelectors[key]);
     if (element) { element.textContent = value; element.style.whiteSpace = 'pre-line'; }
+    const extraFaq = key.match(/^faq-([5-8])-(question|answer)$/);
+    if (extraFaq) document.querySelector(`#faqs details:nth-of-type(${extraFaq[1]})`)?.style.setProperty('display', 'block');
   }
   for (const [key, metadata] of Object.entries(content.images || {})) {
     const element = document.querySelector(editableImageSelectors[key]);
@@ -298,10 +301,10 @@ if (galleryTrack && galleryViewport) {
 
 const photoModalImage = document.querySelector('#photo-modal-image');
 const photoModalCaption = document.querySelector('#photo-modal-caption');
-const showEngagementPhoto = (index) => {
+const showEngagementPhoto = (index, clickedSource = '') => {
   currentPhoto = (index + engagementPhotos.length) % engagementPhotos.length;
   const photo = engagementPhotos[currentPhoto];
-  photoModalImage.src = photo.src;
+  photoModalImage.src = clickedSource || photo.src;
   photoModalImage.alt = photo.alt;
   photoModalCaption.textContent = `Lanja & Kyle · ${currentPhoto + 1} of ${engagementPhotos.length}`;
   if (!photoModal.open) photoModal.showModal();
@@ -310,7 +313,7 @@ const showEngagementPhoto = (index) => {
 };
 galleryTrack?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-photo-index]');
-  if (button) showEngagementPhoto(Number(button.dataset.photoIndex));
+  if (button) showEngagementPhoto(Number(button.dataset.photoIndex), button.querySelector('img')?.currentSrc || button.querySelector('img')?.src);
 });
 document.querySelector('#photo-modal-close')?.addEventListener('click', () => photoModal.close());
 document.querySelector('#photo-modal-prev')?.addEventListener('click', () => showEngagementPhoto(currentPhoto - 1));
