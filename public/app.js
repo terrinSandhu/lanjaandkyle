@@ -4,6 +4,40 @@ const nav = document.querySelector('#main-nav');
 const railLinks = [...document.querySelectorAll('.section-rail-link')];
 const mainLinks = [...nav.querySelectorAll('a')];
 
+const editableTextSelectors = {
+  'hero-announcement': '.hero-announce', 'hero-names': '#home h1', 'welcome-label': '.intro > .eyebrow', 'welcome-heading': '.intro > h2',
+  'weekend-label': '#schedule .section-heading > .eyebrow', 'weekend-heading': '#schedule h2', 'weekend-intro': '#schedule .lede', 'schedule-1-time': '#schedule-list .schedule-card:nth-child(1) .time', 'schedule-1-title': '#schedule-list .schedule-card:nth-child(1) h3', 'schedule-2-time': '#schedule-list .schedule-card:nth-child(2) .time', 'schedule-2-title': '#schedule-list .schedule-card:nth-child(2) h3', 'schedule-3-time': '#schedule-list .schedule-card:nth-child(3) .time', 'schedule-3-title': '#schedule-list .schedule-card:nth-child(3) h3',
+  'travel-heading': '#travel .split-copy h2', 'travel-copy': '#travel .split-copy > p:not(.eyebrow)', 'stay-heading': '.accommodations-copy .eyebrow',
+  'stay-copy': '.accommodations-copy > p:not(.eyebrow)', 'engagement-names': '.story-couple', 'engagement-date': '.story-date', 'engagement-address': '.story-address',
+  'things-heading': '#things-to-do .section-heading h2', 'things-intro': '#things-to-do .lede', 'zoo-title': '.thing-zoo h3', 'zoo-copy': '.thing-zoo > div:last-child > p:last-child',
+  'funk-title': '.thing-funk h3', 'funk-copy': '.thing-funk > div:last-child > p:last-child', 'state-title': '.thing-state h3', 'state-copy': '.thing-state > div:last-child > p:last-child',
+  'bike-title': '.thing-bike h3', 'bike-copy': '.thing-bike > div:last-child > p:last-child', 'beach-title': '.thing-beach h3', 'beach-copy': '.thing-beach > div:last-child > p:last-child',
+  'mission-title': '.thing-mission h3', 'mission-copy': '.thing-mission > div:last-child > p:last-child', 'faq-heading': '#faqs .section-heading h2',
+  'faq-1-question': '#faqs details:nth-of-type(1) summary', 'faq-1-answer': '#faqs details:nth-of-type(1) p', 'faq-2-question': '#faqs details:nth-of-type(2) summary', 'faq-2-answer': '#faqs details:nth-of-type(2) p',
+  'faq-3-question': '#faqs details:nth-of-type(3) summary', 'faq-3-answer': '#faqs details:nth-of-type(3) p', 'faq-4-question': '#faqs details:nth-of-type(4) summary', 'faq-4-answer': '#faqs details:nth-of-type(4) p',
+  'footer-copy': 'footer > p:not(.footer-small)'
+};
+const editableImageSelectors = {
+  hero: '.hero-image', venue: '.story-backdrop', travel: '.split-art.art-palm', zoo: '.thing-zoo .thing-photo', funk: '.thing-funk .thing-photo',
+  state: '.thing-state .thing-photo', bike: '.thing-bike .thing-photo', beach: '.thing-beach .thing-photo', mission: '.thing-mission .thing-photo'
+};
+function applySavedSiteContent(content) {
+  for (const [key, value] of Object.entries(content.text || {})) {
+    const element = document.querySelector(editableTextSelectors[key]);
+    if (element) { element.textContent = value; element.style.whiteSpace = 'pre-line'; }
+  }
+  for (const [key, metadata] of Object.entries(content.images || {})) {
+    const element = document.querySelector(editableImageSelectors[key]);
+    if (element && metadata) element.style.backgroundImage = `url("/api/site-image/${encodeURIComponent(key)}?v=${Date.now()}")`;
+  }
+  for (let index = 1; index <= 31; index += 1) {
+    const key = `engagement-${String(index).padStart(2, '0')}`;
+    const image = document.querySelector(`#engagement-track .story-photo:nth-child(${index}) img`);
+    if (image && content.images?.[key]) image.src = `/api/site-image/${encodeURIComponent(key)}?v=${Date.now()}`;
+  }
+}
+fetch('/api/site-content').then((response) => response.ok ? response.json() : null).then((content) => content && applySavedSiteContent(content)).catch(() => {});
+
 document.querySelector('.menu-toggle').addEventListener('click', (event) => {
   const open = nav.classList.toggle('open');
   event.currentTarget.setAttribute('aria-expanded', String(open));
@@ -50,6 +84,7 @@ async function loadSchedule() {
       return `<article class="schedule-card reveal" role="button" tabindex="0"><span class="line-icon schedule-icon" aria-hidden="true">${icon}</span><div class="time">${date} · ${time}</div><h3>${title}</h3>${description ? `<p>${description}</p>` : ''}${location ? `<p class="time">${location}</p>` : ''}</article>`;
     }).join('');
     observeReveals(list);
+    fetch('/api/site-content').then((response) => response.ok ? response.json() : null).then((content) => content && applySavedSiteContent(content)).catch(() => {});
   } catch { list.innerHTML = '<p class="loading">Schedule details are coming soon.</p>'; }
 }
 loadSchedule();
