@@ -9,6 +9,7 @@ const textValue = document.querySelector('#admin-text-value');
 const imageSelect = document.querySelector('#admin-image-key');
 const imagePreview = document.querySelector('#admin-image-preview');
 const imageFile = document.querySelector('#admin-image-file');
+const colorFields = [['color-ink', 'Ink / main text', '#253b36'], ['color-muted', 'Muted text', '#6c7c75'], ['color-cream', 'Canvas', '#f7f3ed'], ['color-sand', 'Tinted sections', '#ebe2d5'], ['color-sage', 'Sage accent', '#c9d5c6'], ['color-rust', 'Warm accent', '#a97858']];
 
 const textFields = [
   ['hero-announcement', 'Home · announcement', '.hero-announce'], ['hero-names', 'Home · names', '#home h1'],
@@ -41,6 +42,8 @@ const imageFields = [
 
 for (const [key, label] of textFields) textSelect.add(new Option(label, key));
 for (const [key, label] of imageFields) imageSelect.add(new Option(label, key));
+const colorGrid = document.querySelector('#admin-colors');
+for (const [key, label, fallback] of colorFields) { const row = document.createElement('label'); row.textContent = label; row.innerHTML += `<input type="color" data-color-key="${key}" value="${fallback}" />`; colorGrid?.append(row); }
 
 async function api(path, options = {}) {
   const response = await fetch(path, { credentials: 'same-origin', ...options });
@@ -79,9 +82,11 @@ async function loadSavedContent() {
   const content = await api('/api/site-content');
   savedImages = content.images || {};
   for (const [key, value] of Object.entries(content.text || {})) setText(key, value);
+  for (const [key] of colorFields) { const saved = content.text?.[key]; const input = document.querySelector(`[data-color-key="${key}"]`); if (input && /^#[0-9a-f]{6}$/i.test(saved || '')) input.value = saved; }
   for (const key of Object.keys(content.images || {})) applyImage(key, imageUrl(key));
   return content;
 }
+colorGrid?.addEventListener('change', async (event) => { const input = event.target.closest('[data-color-key]'); if (!input) return; try { await api('/api/admin/text', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ [input.dataset.colorKey]: input.value }) }); document.querySelector('#admin-color-status').textContent = 'Colors saved to the live site.'; } catch (error) { document.querySelector('#admin-color-status').textContent = error.message; } });
 
 function selectText() {
   const field = textFields.find(([key]) => key === textSelect.value);

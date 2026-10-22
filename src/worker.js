@@ -1,4 +1,4 @@
-const EDITABLE_TEXT_KEYS = new Set([
+const EDITABLE_TEXT_KEYS = new Set(['color-ink', 'color-muted', 'color-cream', 'color-sand', 'color-sage', 'color-rust',
   'hero-announcement', 'hero-names', 'welcome-label', 'welcome-heading', 'weekend-label', 'weekend-heading', 'schedule-1-time', 'schedule-1-title', 'schedule-1-description', 'schedule-1-location', 'schedule-2-time', 'schedule-2-title', 'schedule-2-description', 'schedule-2-location', 'schedule-3-time', 'schedule-3-title', 'schedule-3-description', 'schedule-3-location', 'weekend-intro',
   'travel-heading', 'travel-copy', 'stay-heading', 'stay-copy', 'engagement-heading', 'engagement-hint', 'engagement-names', 'engagement-date', 'engagement-address',
   'registry-label', 'registry-heading', 'registry-copy', 'things-heading', 'things-intro', 'zoo-title', 'zoo-copy',

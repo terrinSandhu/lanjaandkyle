@@ -23,6 +23,8 @@ const editableImageSelectors = {
   state: '.thing-state .thing-photo', bike: '.thing-bike .thing-photo', beach: '.thing-beach .thing-photo', mission: '.thing-mission .thing-photo'
 };
 function applySavedSiteContent(content) {
+  const colorVariables = { 'color-ink': '--ink', 'color-muted': '--muted', 'color-cream': '--cream', 'color-sand': '--sand', 'color-sage': '--sage', 'color-rust': '--rust' };
+  for (const [key, value] of Object.entries(content.text || {})) if (colorVariables[key] && /^#[0-9a-f]{6}$/i.test(value)) document.documentElement.style.setProperty(colorVariables[key], value);
   for (const [key, value] of Object.entries(content.text || {})) {
     const element = document.querySelector(editableTextSelectors[key]);
     if (element) { element.textContent = value; element.style.whiteSpace = 'pre-line'; }
