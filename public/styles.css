@@ -217,7 +217,7 @@
 .schedule-card:nth-child(3) .schedule-icon{color:#6f94a0;transform:rotate(-5deg)}
 .schedule-icon svg{transition:transform .35s ease}.schedule-card:hover .schedule-icon svg{transform:scale(1.15) rotate(10deg)}
 #registry,#rsvp{display:none!important}
-.main-nav a[href="#registry"],.main-nav a[href="#rsvp"],.section-rail-link[href="#registry"],.section-rail-link[href="#rsvp"],.mobile-rsvp-cta{display:none!important}
+.section-rail{display:none!important}.main-nav a[href="#registry"],.main-nav a[href="#rsvp"],.section-rail-link[href="#registry"],.section-rail-link[href="#rsvp"],.mobile-rsvp-cta{display:none!important}
 .thing-mission .thing-photo:before{display:none!important}
 @keyframes schedule-wiggle{0%,100%{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-4px)}}
 .schedule-card:hover .schedule-icon{animation:schedule-wiggle .8s ease-in-out infinite}
