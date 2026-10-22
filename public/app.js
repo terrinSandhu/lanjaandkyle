@@ -190,13 +190,19 @@ document.querySelectorAll('[data-registry-item]').forEach((item) => item.addEven
 
 document.querySelector('[data-registry-item="Honeymoon fund"]')?.remove();
 
+const firstFaq = document.querySelector('#faqs details:first-child');
+if (firstFaq) {
+  firstFaq.querySelector('summary').textContent = 'What should I wear?';
+  firstFaq.querySelector('p').textContent = 'The dress code is formal. Villa Verano has a lot of stairs so comfortable shoes are highly encouraged. The ceremony will take place on grass so please keep that in mind as well.';
+}
+
 const galleryViewport = document.querySelector('#engagement-viewport');
 const galleryTrack = document.querySelector('#engagement-track');
 const galleryPosition = document.querySelector('#gallery-position');
 const galleryToggle = document.querySelector('#gallery-toggle');
 const photoModal = document.querySelector('#photo-modal');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const engagementPhotos = Array.from({ length: 31 }, (_, index) => ({
+const engagementPhotos = Array.from({ length: 10 }, (_, index) => ({
   src: `/assets/engagement/gallery/${String(index + 1).padStart(2, '0')}.jpg`,
   alt: `Lanja and Kyle, engagement photograph ${index + 1}`
 }));

@@ -210,3 +210,15 @@
 .admin-panel .form-status{color:var(--muted)}
 @media(max-width:600px){.admin-mode{align-items:flex-start;flex-direction:column}.admin-image-preview{height:180px}.admin-panel>.modal-close{top:14px;right:14px}.admin-panel h2{padding-right:44px}}
 .story-backdrop{background:linear-gradient(90deg,rgba(27,44,39,.28),rgba(27,44,39,.04) 72%),url('/assets/lanja-request/watercolor-source.jpg') center/cover!important;filter:saturate(.72) contrast(.94)}
+.site-hidden-section{display:none!important}
+.hero-announce{font:400 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.schedule-card:nth-child(1) .schedule-icon{color:#c28b75;transform:rotate(-8deg)}
+.schedule-card:nth-child(2) .schedule-icon{color:#8a9d7d;transform:rotate(6deg)}
+.schedule-card:nth-child(3) .schedule-icon{color:#6f94a0;transform:rotate(-5deg)}
+.schedule-icon svg{transition:transform .35s ease}.schedule-card:hover .schedule-icon svg{transform:scale(1.15) rotate(10deg)}
+#registry,#rsvp{display:none!important}
+.main-nav a[href="#registry"],.main-nav a[href="#rsvp"],.section-rail-link[href="#registry"],.section-rail-link[href="#rsvp"],.mobile-rsvp-cta{display:none!important}
+.thing-mission .thing-photo:before{display:none!important}
+@keyframes schedule-wiggle{0%,100%{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-4px)}}
+.schedule-card:hover .schedule-icon{animation:schedule-wiggle .8s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.schedule-card:hover .schedule-icon{animation:none}}

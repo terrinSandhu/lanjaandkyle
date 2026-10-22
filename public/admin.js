@@ -13,7 +13,7 @@ const imageFile = document.querySelector('#admin-image-file');
 const textFields = [
   ['hero-announcement', 'Home · announcement', '.hero-announce'], ['hero-names', 'Home · names', '#home h1'],
   ['welcome-label', 'Welcome · label', '.intro > .eyebrow'], ['welcome-heading', 'Welcome · heading', '.intro > h2'],
-  ['weekend-label', 'Schedule · label', '#schedule .section-heading > .eyebrow'], ['weekend-heading', 'Schedule · heading', '#schedule h2'],
+  ['weekend-label', 'Schedule · label', '#schedule .section-heading > .eyebrow'], ['weekend-heading', 'Schedule · heading', '#schedule h2'], ['schedule-1-time', 'Wedding Weekend · welcome drinks time', '#schedule-list .schedule-card:nth-child(1) .time'], ['schedule-1-title', 'Wedding Weekend · welcome drinks title', '#schedule-list .schedule-card:nth-child(1) h3'], ['schedule-2-time', 'Wedding Weekend · ceremony time', '#schedule-list .schedule-card:nth-child(2) .time'], ['schedule-2-title', 'Wedding Weekend · ceremony title', '#schedule-list .schedule-card:nth-child(2) h3'], ['schedule-3-time', 'Wedding Weekend · brunch time', '#schedule-list .schedule-card:nth-child(3) .time'], ['schedule-3-title', 'Wedding Weekend · brunch title', '#schedule-list .schedule-card:nth-child(3) h3'],
   ['weekend-intro', 'Schedule · introduction', '#schedule .lede'], ['travel-heading', 'Travel · heading', '#travel .split-copy h2'],
   ['travel-copy', 'Travel · details', '#travel .split-copy > p:not(.eyebrow)'], ['stay-heading', 'Accommodations · label', '.accommodations-copy .eyebrow'],
   ['stay-copy', 'Accommodations · details', '.accommodations-copy > p:not(.eyebrow)'], ['engagement-names', 'Story · names', '.story-couple'],
@@ -27,7 +27,7 @@ const textFields = [
   ['bike-title', 'Waterfront biking · title', '.thing-bike h3'], ['bike-copy', 'Waterfront biking · details', '.thing-bike > div:last-child > p:last-child'],
   ['beach-title', 'Butterfly Beach · title', '.thing-beach h3'], ['beach-copy', 'Butterfly Beach · details', '.thing-beach > div:last-child > p:last-child'],
   ['mission-title', 'Old Mission · title', '.thing-mission h3'], ['mission-copy', 'Old Mission · details', '.thing-mission > div:last-child > p:last-child'],
-  ['faq-heading', 'FAQs · heading', '#faqs .section-heading h2'], ['rsvp-heading', 'RSVP · heading', '#rsvp h2'],
+  ['faq-heading', 'FAQs · heading', '#faqs .section-heading h2'], ['faq-1-question', 'FAQs · question 1', '#faqs details:nth-of-type(1) summary'], ['faq-1-answer', 'FAQs · answer 1', '#faqs details:nth-of-type(1) p'], ['faq-2-question', 'FAQs · question 2', '#faqs details:nth-of-type(2) summary'], ['faq-2-answer', 'FAQs · answer 2', '#faqs details:nth-of-type(2) p'], ['faq-3-question', 'FAQs · question 3', '#faqs details:nth-of-type(3) summary'], ['faq-3-answer', 'FAQs · answer 3', '#faqs details:nth-of-type(3) p'], ['faq-4-question', 'FAQs · question 4', '#faqs details:nth-of-type(4) summary'], ['faq-4-answer', 'FAQs · answer 4', '#faqs details:nth-of-type(4) p'], ['rsvp-heading', 'RSVP · heading', '#rsvp h2'],
   ['rsvp-copy', 'RSVP · details', '.rsvp-note'], ['footer-copy', 'Footer · line', 'footer > p:not(.footer-small)']
 ];
 const imageFields = [
@@ -36,7 +36,7 @@ const imageFields = [
   ['funk', 'Things to do · Funk Zone', '.thing-funk .thing-photo'], ['state', 'Things to do · State Street', '.thing-state .thing-photo'],
   ['bike', 'Things to do · Waterfront biking', '.thing-bike .thing-photo'], ['beach', 'Things to do · Butterfly Beach', '.thing-beach .thing-photo'],
   ['mission', 'Things to do · Old Mission', '.thing-mission .thing-photo'],
-  ...Array.from({ length: 31 }, (_, index) => [`engagement-${String(index + 1).padStart(2, '0')}`, `Engagement · photo ${index + 1}`, `#engagement-track .story-photo:nth-child(${index + 1}) img`])
+  ...Array.from({ length: 10 }, (_, index) => [`engagement-${String(index + 1).padStart(2, '0')}`, `Engagement · photo ${index + 1}`, `#engagement-track .story-photo:nth-child(${index + 1}) img`])
 ];
 
 for (const [key, label] of textFields) textSelect.add(new Option(label, key));

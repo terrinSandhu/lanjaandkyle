@@ -1,9 +1,9 @@
 const EDITABLE_TEXT_KEYS = new Set([
-  'hero-announcement', 'hero-names', 'welcome-label', 'welcome-heading', 'weekend-label', 'weekend-heading', 'weekend-intro',
+  'hero-announcement', 'hero-names', 'welcome-label', 'welcome-heading', 'weekend-label', 'weekend-heading', 'schedule-1-time', 'schedule-1-title', 'schedule-2-time', 'schedule-2-title', 'schedule-3-time', 'schedule-3-title', 'weekend-intro',
   'travel-heading', 'travel-copy', 'stay-heading', 'stay-copy', 'engagement-names', 'engagement-date', 'engagement-address',
   'registry-label', 'registry-heading', 'registry-copy', 'things-heading', 'things-intro', 'zoo-title', 'zoo-copy',
   'funk-title', 'funk-copy', 'state-title', 'state-copy', 'bike-title', 'bike-copy', 'beach-title', 'beach-copy',
-  'mission-title', 'mission-copy', 'faq-heading', 'rsvp-heading', 'rsvp-copy', 'footer-copy'
+  'mission-title', 'mission-copy', 'faq-heading', 'faq-1-question', 'faq-1-answer', 'faq-2-question', 'faq-2-answer', 'faq-3-question', 'faq-3-answer', 'faq-4-question', 'faq-4-answer', 'rsvp-heading', 'rsvp-copy', 'footer-copy'
 ]);
 const EDITABLE_IMAGE_KEYS = new Set(['hero', 'venue', 'travel', 'zoo', 'funk', 'state', 'bike', 'beach', 'mission', ...Array.from({ length: 31 }, (_, index) => `engagement-${String(index + 1).padStart(2, '0')}`)]);
 const CONTENT_KEY = 'site:editable:content:v1';
