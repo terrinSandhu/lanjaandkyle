@@ -15,7 +15,7 @@ const textFields = [
   ['welcome-label', 'Welcome · label', '.intro > .eyebrow'], ['welcome-heading', 'Welcome · heading', '.intro > h2'],
   ['weekend-label', 'Schedule · label', '#schedule .section-heading > .eyebrow'], ['weekend-heading', 'Schedule · heading', '#schedule h2'], ['schedule-1-time', 'Wedding Weekend · welcome drinks time', '#schedule-list .schedule-card:nth-child(1) .time'], ['schedule-1-title', 'Wedding Weekend · welcome drinks title', '#schedule-list .schedule-card:nth-child(1) h3'], ['schedule-2-time', 'Wedding Weekend · ceremony time', '#schedule-list .schedule-card:nth-child(2) .time'], ['schedule-2-title', 'Wedding Weekend · ceremony title', '#schedule-list .schedule-card:nth-child(2) h3'], ['schedule-3-time', 'Wedding Weekend · brunch time', '#schedule-list .schedule-card:nth-child(3) .time'], ['schedule-3-title', 'Wedding Weekend · brunch title', '#schedule-list .schedule-card:nth-child(3) h3'],
   ['weekend-intro', 'Schedule · introduction', '#schedule .lede'], ['travel-heading', 'Travel · heading', '#travel .split-copy h2'],
-  ['travel-copy', 'Travel · details', '#travel .split-copy > p:not(.eyebrow)'], ['stay-heading', 'Accommodations · label', '.accommodations-copy .eyebrow'],
+  ['travel-copy', 'Travel · details', '#travel .split-copy > p:nth-of-type(2)'], ['stay-heading', 'Accommodations · label', '.accommodations-copy .eyebrow'],
   ['stay-copy', 'Accommodations · details', '.accommodations-copy > p:not(.eyebrow)'], ['engagement-names', 'Story · names', '.story-couple'],
   ['engagement-date', 'Story · date', '.story-date'], ['engagement-address', 'Story · place', '.story-address'],
   ['registry-label', 'Registry · label', '#registry > .eyebrow'], ['registry-heading', 'Registry · heading', '#registry h2'],
