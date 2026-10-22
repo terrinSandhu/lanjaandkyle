@@ -301,10 +301,11 @@ if (galleryTrack && galleryViewport) {
 
 const photoModalImage = document.querySelector('#photo-modal-image');
 const photoModalCaption = document.querySelector('#photo-modal-caption');
+const renderedGalleryPhotoSource = (index) => galleryTrack?.querySelectorAll('.story-photo img')[index]?.currentSrc || galleryTrack?.querySelectorAll('.story-photo img')[index]?.src || engagementPhotos[index]?.src;
 const showEngagementPhoto = (index, clickedSource = '') => {
   currentPhoto = (index + engagementPhotos.length) % engagementPhotos.length;
   const photo = engagementPhotos[currentPhoto];
-  photoModalImage.src = clickedSource || photo.src;
+  photoModalImage.src = clickedSource || renderedGalleryPhotoSource(currentPhoto) || photo.src;
   photoModalImage.alt = photo.alt;
   photoModalCaption.textContent = `Lanja & Kyle · ${currentPhoto + 1} of ${engagementPhotos.length}`;
   if (!photoModal.open) photoModal.showModal();
